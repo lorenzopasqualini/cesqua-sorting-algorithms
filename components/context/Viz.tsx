@@ -21,7 +21,7 @@ interface SortingContextType{
 const SortingContext= createContext<SortingContextType | undefined>(undefined)
 
 export const SortingProvider= ({children}: {children: React.ReactNode})=> {
-    const [arrayToSort, setArrayToSort]= useState<number[]>([])
+    const [arrayToSort, setArrayToSort]= useState<number[]>([100, 150, 300, 400, 500, 650, 450, 250, 50])
     const [selectedAlgorithm, setSelectedAlgorithm]= useState<SortingType>("bubble")
     const [isSorting, setIsSorting]= useState<boolean>(false)
     const [animationSpeed, setAnimationSpeed]= useState<number>(MAX_ANIMATION_SPEED)
