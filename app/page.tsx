@@ -1,11 +1,15 @@
 'use client'
+import { Slider } from "@/components/context/Slider";
 import { useSortingContext } from "@/components/context/Viz";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { arrayToSort, isSorting }= useSortingContext()
+  const { arrayToSort, isSorting, animationSpeed, setAnimationSpeed }= useSortingContext()
 
-  useEffect(()=>{},[])
+  useEffect(()=>{
+    console.log(animationSpeed);
+    
+  },[animationSpeed])
 
   return (
     <main className="absolute top-0 h-screen w-screen">
@@ -13,7 +17,13 @@ export default function Home() {
         <div id="contcont" className="flex max-w-[1020px] w-full flex-col lg:px-0 px-4">
           <div className="h-[66px] relative flex items-center justify-between w-full">
             <h1 className="text-teal-300 text-2xl font-light hidden md:flex">Sorting Viz</h1>
-            <div>Controls</div>
+            <div className="flex items-center justify-center gap-4">
+              <Slider
+                value={animationSpeed}
+                handleChange={(e)=> setAnimationSpeed(Number(e.target.value))}
+                disabled={isSorting}
+              />
+            </div>
           </div>
           <div className="relative h-[calc(100vh-66px)] w-full">
             <div className="absolute bottom-[32px] w-full mx-auto left-0 right-0 flex justify-center items-end">
