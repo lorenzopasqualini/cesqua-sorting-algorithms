@@ -1,6 +1,6 @@
 'use client'
 import { createContext, useContext, useEffect, useState } from "react"
-import { SortingType } from "@/lib/types"
+import { AnimationType, SortingType } from "@/lib/types"
 import { MAX_ANIMATION_SPEED, genRandomNumber } from "@/lib/utils"
 
 interface SortingContextType{
@@ -15,7 +15,8 @@ interface SortingContextType{
     animationComplete: boolean
     setAnimationComplete: (isComplete: boolean)=> void
     resetArray: ()=> void
-    runAnimation: ()=> void
+    runAnimation: (animations: AnimationType)=> void
+    resetRequired: boolean
 }
 
 const SortingContext= createContext<SortingContextType | undefined>(undefined)
@@ -26,6 +27,7 @@ export const SortingProvider= ({children}: {children: React.ReactNode})=> {
     const [isSorting, setIsSorting]= useState<boolean>(false)
     const [animationSpeed, setAnimationSpeed]= useState<number>(MAX_ANIMATION_SPEED)
     const [animationComplete, setAnimationComplete]= useState<boolean>(false)
+    const resetRequired= animationComplete || isSorting
 
     useEffect(()=>{
         resetArray()
@@ -52,8 +54,57 @@ export const SortingProvider= ({children}: {children: React.ReactNode})=> {
         setArrayToSort(tempArray)
         setAnimationComplete(false)
         setIsSorting(false)
+
+        const highestNum= window.setTimeout(()=>{
+            for(let i = highestNum; i >= 0; i--){
+                window.clearTimeout(i)
+            }
+        }, 0)
+        setTimeout(()=>{
+            const arrayLines= document.getElementsByClassName("array-line") as HTMLCollectionOf<HTMLElement>
+            for(let i = 0; i < arrayLines.length; i++){
+                arrayLines[i].classList.remove("bg-red-400")
+                arrayLines[i].classList.add("bg-teal-400")                
+            }
+        }, 0)
+    };
+
+    const runAnimation= (animations: AnimationType)=>{
+        setIsSorting(true)
+        const inverseSpeed= (1/animationSpeed)*200
+        const arrayLines= document.getElementsByClassName("array-line") as HTMLCollectionOf<HTMLElement>
+
+        const updateClass=(
+            indexes: number[],
+            addClassName: string,
+            removeClassName: string
+            )=>{
+                indexes.forEach((index)=>{
+                    arrayLines[index].classList.add(addClassName)
+                    arrayLines[index].classList.remove(removeClassName)
+                })
+        }
+        const updateHeight=(
+            lineIndex: number,
+            newHeight: number | undefined
+        )=>{
+            if(newHeight == undefined) return
+            arrayLines[lineIndex].style.height= `${newHeight}px`
+        }
+
+        animations.forEach((animation, index)=>{
+            setTimeout(()=>{
+                const [values, isSwap]= animation
+                if(!isSwap){
+                    updateClass(values, "bg-red-800", "bg-teal-400")
+                    setTimeout(()=>{ updateClass(values, "bg-teal-400", "bg-red-800") }, inverseSpeed)
+                } else {
+                    const [lineIndex, newHeight]= values
+                    updateHeight(lineIndex, newHeight)
+                }
+            }, index * inverseSpeed)
+        })
     }
-    const runAnimation= ()=>{}
 
     const value={
         arrayToSort,
@@ -67,7 +118,8 @@ export const SortingProvider= ({children}: {children: React.ReactNode})=> {
         animationComplete,
         setAnimationComplete,
         resetArray,
-        runAnimation
+        runAnimation,
+        resetRequired
     }
 
     return <SortingContext.Provider value={value}>{children}</SortingContext.Provider>

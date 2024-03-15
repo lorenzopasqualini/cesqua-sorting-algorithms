@@ -1,3 +1,6 @@
+import { genBubbleSort } from "@/algorithm/bubble"
+import { AnimationType, SortingType } from "./types"
+
 export const MIN_ANIMATION_SPEED= 100
 export const MAX_ANIMATION_SPEED= 500
 
@@ -12,3 +15,18 @@ export const algorithms=[
     { label: 'Selection', value: 'selection' },
     { label: 'Insertion', value: 'insertion' }
 ]
+
+export function genAnimation(
+    selectedAlgorithm: SortingType,
+    isSorting: boolean,
+    array: number[],
+    runAnimation: (animations: AnimationType)=> void
+) {
+    switch(selectedAlgorithm){
+        case 'bubble':
+            genBubbleSort(isSorting, array, runAnimation)
+            break;
+        default:
+            break;
+    }
+}

@@ -3,19 +3,22 @@ import { Select } from "@/components/Select";
 import { Slider } from "@/components/Slider";
 import { useSortingContext } from "@/components/context/Viz";
 import { SortingType } from "@/lib/types";
-import { algorithms } from "@/lib/utils";
-import { useEffect } from "react";
+import { algorithms, genAnimation } from "@/lib/utils";
+import { FaPlayCircle } from "react-icons/fa";
+import { RxReset } from "react-icons/rx";
 
 export default function Home() {
-  const { arrayToSort, isSorting, animationSpeed, setAnimationSpeed, selectedAlgorithm, setSelectedAlgorithm }= useSortingContext()
-
-  useEffect(()=>{
-    console.log(selectedAlgorithm);
-    
-  },[selectedAlgorithm])
+  const { arrayToSort, isSorting, animationSpeed, setAnimationSpeed, selectedAlgorithm, setSelectedAlgorithm, resetRequired, resetArray, runAnimation }= useSortingContext()
 
   const handleSelect= (e: React.ChangeEvent<HTMLSelectElement>)=>{
     setSelectedAlgorithm(e.target.value as SortingType)
+  }
+  const handlePlay= ()=>{
+    if(resetRequired){
+      resetArray()
+      return
+    }
+    genAnimation(selectedAlgorithm, isSorting, arrayToSort, runAnimation)
   }
 
   return (
@@ -23,7 +26,7 @@ export default function Home() {
       <div className="flex h-full justify-center">
         <div id="contcont" className="flex max-w-[1020px] w-full flex-col lg:px-0 px-4">
           <div className="h-[66px] relative flex items-center justify-between w-full">
-            <h1 className="text-teal-300 text-2xl font-light hidden md:flex">Sorting Viz</h1>
+            <h1 className="hidden md:flex">Sorting Viz</h1>
             <div className="flex items-center justify-center gap-4">
               <Slider
                 value={animationSpeed}
@@ -36,6 +39,9 @@ export default function Home() {
                 onChange={handleSelect}
                 disabled={isSorting}
               />
+              <button className="flex items-center justify-end" onClick={handlePlay}>
+                {resetRequired ? <RxReset className="h-8 w-8" /> : <FaPlayCircle className="h-8 w-8" /> }
+              </button>
             </div>
           </div>
           <div className="relative h-[calc(100vh-66px)] w-full">
@@ -43,8 +49,8 @@ export default function Home() {
               {arrayToSort.map((value, index)=>(
                 <div
                   key={index}
-                  className="relative w-1 mx-0.5 shadow-lg opacity-60 rounded-lg"
-                  style={{height: `${value}px`, backgroundColor: 'teal'}}
+                  className="array-line bg-teal-400 relative w-1 mx-0.5 shadow-lg rounded-lg"
+                  style={{height: `${value}px`}}
                 ></div>
               ))}
             </div>
