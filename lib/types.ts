@@ -4,3 +4,8 @@ export type SortingType=
     | "quick"
     | "selection"
     | "insertion"
+
+export type SelectType= {
+    value: string,
+    label: string
+}
