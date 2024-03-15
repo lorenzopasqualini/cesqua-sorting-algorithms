@@ -49,7 +49,7 @@ export default function Home() {
               {arrayToSort.map((value, index)=>(
                 <div
                   key={index}
-                  className="array-line bg-teal-400 relative w-1 mx-0.5 shadow-lg rounded-lg"
+                  className="array-line bg-white relative w-1 mx-0.5 shadow-lg rounded-lg"
                   style={{height: `${value}px`}}
                 ></div>
               ))}

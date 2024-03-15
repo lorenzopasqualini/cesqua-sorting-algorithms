@@ -64,7 +64,7 @@ export const SortingProvider= ({children}: {children: React.ReactNode})=> {
             const arrayLines= document.getElementsByClassName("array-line") as HTMLCollectionOf<HTMLElement>
             for(let i = 0; i < arrayLines.length; i++){
                 arrayLines[i].classList.remove("bg-red-400")
-                arrayLines[i].classList.add("bg-teal-400")                
+                arrayLines[i].classList.add("bg-white")                
             }
         }, 0)
     };
@@ -96,8 +96,8 @@ export const SortingProvider= ({children}: {children: React.ReactNode})=> {
             setTimeout(()=>{
                 const [values, isSwap]= animation
                 if(!isSwap){
-                    updateClass(values, "bg-green-600", "bg-teal-400")
-                    setTimeout(()=>{ updateClass(values, "bg-teal-400", "bg-green-600") }, inverseSpeed)
+                    updateClass(values, "bg-green-600", "bg-white")
+                    setTimeout(()=>{ updateClass(values, "bg-white", "bg-green-600") }, inverseSpeed)
                 } else {
                     const [lineIndex, newHeight]= values
                     updateHeight(lineIndex, newHeight)
@@ -109,13 +109,13 @@ export const SortingProvider= ({children}: {children: React.ReactNode})=> {
         setTimeout(()=>{
             Array.from(arrayLines).forEach((lin)=>{
                 lin.classList.add('pulse', 'bg-green-600')
-                lin.classList.remove('bg-teal-400')
+                lin.classList.remove('bg-white')
             })
 
             setTimeout(()=>{
                 Array.from(arrayLines).forEach((lin)=>{
                     lin.classList.remove('pulse', 'bg-green-600')
-                    lin.classList.add('bg-teal-400')
+                    lin.classList.add('bg-white')
                 })
                 setIsSorting(false)
                 setAnimationComplete(true)
