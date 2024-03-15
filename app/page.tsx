@@ -3,7 +3,7 @@ import { Select } from "@/components/Select";
 import { Slider } from "@/components/Slider";
 import { useSortingContext } from "@/components/context/Viz";
 import { SortingType } from "@/lib/types";
-import { algorithms, genAnimation } from "@/lib/utils";
+import { algorithms, getAnimation } from "@/lib/utils";
 import { FaPlayCircle } from "react-icons/fa";
 import { RxReset } from "react-icons/rx";
 
@@ -18,7 +18,7 @@ export default function Home() {
       resetArray()
       return
     }
-    genAnimation(selectedAlgorithm, isSorting, arrayToSort, runAnimation)
+    getAnimation(selectedAlgorithm, isSorting, arrayToSort, runAnimation)
   }
 
   return (

@@ -13,15 +13,15 @@ function runBubble(array: number[], animations: AnimationType){
     }
 }
 
-export function genBubbleSort(
+export function getBubble(
     isSorting: boolean,
     array: number[],
     runAnimation: (animations: AnimationType)=> void
 ){
     if(array.length <= 1) return [];
     const animations: AnimationType= []
-    const auxiliaryArray= array.slice()
+    const auxArray= array.slice()
 
-    runBubble(auxiliaryArray, animations)
+    runBubble(auxArray, animations)
     runAnimation(animations)
 }

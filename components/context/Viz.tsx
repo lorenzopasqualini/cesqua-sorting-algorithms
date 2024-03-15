@@ -96,14 +96,31 @@ export const SortingProvider= ({children}: {children: React.ReactNode})=> {
             setTimeout(()=>{
                 const [values, isSwap]= animation
                 if(!isSwap){
-                    updateClass(values, "bg-red-800", "bg-teal-400")
-                    setTimeout(()=>{ updateClass(values, "bg-teal-400", "bg-red-800") }, inverseSpeed)
+                    updateClass(values, "bg-green-600", "bg-teal-400")
+                    setTimeout(()=>{ updateClass(values, "bg-teal-400", "bg-green-600") }, inverseSpeed)
                 } else {
                     const [lineIndex, newHeight]= values
                     updateHeight(lineIndex, newHeight)
                 }
             }, index * inverseSpeed)
         })
+
+        const finalTimeout= animations.length * inverseSpeed
+        setTimeout(()=>{
+            Array.from(arrayLines).forEach((lin)=>{
+                lin.classList.add('pulse', 'bg-green-600')
+                lin.classList.remove('bg-teal-400')
+            })
+
+            setTimeout(()=>{
+                Array.from(arrayLines).forEach((lin)=>{
+                    lin.classList.remove('pulse', 'bg-green-600')
+                    lin.classList.add('bg-teal-400')
+                })
+                setIsSorting(false)
+                setAnimationComplete(true)
+            },1000)
+        }, finalTimeout)
     }
 
     const value={
