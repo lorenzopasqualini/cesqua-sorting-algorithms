@@ -17,7 +17,7 @@ export const Slider= ({
 })=> {
     return(
         <div className="flex gap-2 items-center justify-center">
-            <span className="text-center text-red-600">Slow</span>
+            <span className="text-center text-white">Slow</span>
             <input
                 type='range'
                 min={min}
@@ -26,9 +26,9 @@ export const Slider= ({
                 value={value}
                 onChange={handleChange}
                 disabled={disabled}
-                className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-gray-600"
+                className="w-full h-2 rounded-md appearance-none cursor-pointer bg-gray-600"
             />
-            <span className="text-center text-green-600">Fast</span>
+            <span className="text-center text-[#00ff7f]">Fast</span>
         </div>
     )
 }

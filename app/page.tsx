@@ -1,11 +1,10 @@
 'use client'
 import { Select } from "@/components/Select";
 import { Slider } from "@/components/Slider";
-import { useSortingContext } from "@/components/context/Viz";
+import { useSortingContext } from "@/components/Viz";
 import { SortingType } from "@/lib/types";
 import { algorithms, getAnimation } from "@/lib/utils";
-import { FaPlayCircle } from "react-icons/fa";
-import { RxReset } from "react-icons/rx";
+import { CgPlayButtonO, CgPlayStopO } from "react-icons/cg";
 
 export default function Home() {
   const { arrayToSort, isSorting, animationSpeed, setAnimationSpeed, selectedAlgorithm, setSelectedAlgorithm, resetRequired, resetArray, runAnimation }= useSortingContext()
@@ -22,12 +21,11 @@ export default function Home() {
   }
 
   return (
-    <main className="absolute top-0 h-screen w-screen">
-      <div className="flex h-full justify-center">
+    <main className="mt-8">
+      <div className="flex justify-center">
         <div id="contcont" className="flex max-w-[1020px] w-full flex-col lg:px-0 px-4">
-          <div className="h-[66px] relative flex items-center justify-between w-full">
-            <h1 className="hidden md:flex">Sorting Viz</h1>
-            <div className="flex items-center justify-center gap-4">
+          <div className="w-full h-[75vh] border-2 border-gray-600 rounded-lg relative">
+            <div className="flex sm:flex-row flex-col border-b-2 border-gray-600 rounded-lg p-3 items-center justify-center gap-4">
               <Slider
                 value={animationSpeed}
                 handleChange={(e)=> setAnimationSpeed(Number(e.target.value))}
@@ -40,16 +38,14 @@ export default function Home() {
                 disabled={isSorting}
               />
               <button className="flex items-center justify-end" onClick={handlePlay}>
-                {resetRequired ? <RxReset className="h-8 w-8" /> : <FaPlayCircle className="h-8 w-8" /> }
+                {resetRequired ? <CgPlayStopO className="h-8 w-8 text-white" /> : <CgPlayButtonO className="h-8 w-8 text-[#00ff7f]" /> }
               </button>
             </div>
-          </div>
-          <div className="relative h-[calc(100vh-66px)] w-full">
-            <div className="absolute bottom-[32px] w-full mx-auto left-0 right-0 flex justify-center items-end">
+            <div className="absolute bottom-[2px] w-full mx-auto left-0 right-0 flex justify-center items-end">
               {arrayToSort.map((value, index)=>(
                 <div
                   key={index}
-                  className="array-line bg-white relative w-1 mx-0.5 shadow-lg rounded-lg"
+                  className="array-line bg-green-900 relative w-1 mx-0.5 shadow-lg rounded-lg"
                   style={{height: `${value}px`}}
                 ></div>
               ))}

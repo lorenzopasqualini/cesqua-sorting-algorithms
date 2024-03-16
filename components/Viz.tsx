@@ -63,8 +63,8 @@ export const SortingProvider= ({children}: {children: React.ReactNode})=> {
         setTimeout(()=>{
             const arrayLines= document.getElementsByClassName("array-line") as HTMLCollectionOf<HTMLElement>
             for(let i = 0; i < arrayLines.length; i++){
-                arrayLines[i].classList.remove("bg-red-400")
-                arrayLines[i].classList.add("bg-white")                
+                arrayLines[i].classList.remove("bg-green-700")
+                arrayLines[i].classList.add("bg-green-900")                
             }
         }, 0)
     };
@@ -96,8 +96,8 @@ export const SortingProvider= ({children}: {children: React.ReactNode})=> {
             setTimeout(()=>{
                 const [values, isSwap]= animation
                 if(!isSwap){
-                    updateClass(values, "bg-green-600", "bg-white")
-                    setTimeout(()=>{ updateClass(values, "bg-white", "bg-green-600") }, inverseSpeed)
+                    updateClass(values, "bg-green-700", "bg-green-900")
+                    setTimeout(()=>{ updateClass(values, "bg-green-900", "bg-green-700") }, inverseSpeed)
                 } else {
                     const [lineIndex, newHeight]= values
                     updateHeight(lineIndex, newHeight)
@@ -108,14 +108,14 @@ export const SortingProvider= ({children}: {children: React.ReactNode})=> {
         const finalTimeout= animations.length * inverseSpeed
         setTimeout(()=>{
             Array.from(arrayLines).forEach((lin)=>{
-                lin.classList.add('pulse', 'bg-green-600')
-                lin.classList.remove('bg-white')
+                lin.classList.add('pulse', 'bg-green-700')
+                lin.classList.remove('bg-green-900')
             })
 
             setTimeout(()=>{
                 Array.from(arrayLines).forEach((lin)=>{
-                    lin.classList.remove('pulse', 'bg-green-600')
-                    lin.classList.add('bg-white')
+                    lin.classList.remove('pulse', 'bg-green-700')
+                    lin.classList.add('bg-green-900')
                 })
                 setIsSorting(false)
                 setAnimationComplete(true)
